@@ -1,0 +1,76 @@
+.cards {
+  display: flex;
+  justify-content: center; /* Center the cards within the row */
+  flex-wrap: wrap; /* Allow wrapping for responsiveness */
+  gap: 3em;
+  padding: 2em 0;
+  height: auto; /* Adjust height to fit content */
+}
+.card {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+  width: 150px; /* Fixed width */
+  height: 300px; /* Fixed height */
+  text-align: center;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 25px;
+  transition: transform 0.5s ease-in-out, width 0.5s ease-in-out,
+    height 0.5s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.2); /* Scale the card smoothly on hover */
+}
+
+.card-body {
+  width: 150px;
+  height: 300px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: linear-gradient(180deg, rgba(24, 24, 24, 0) 0%, #000000 100%);
+  border-radius: 25px; /* Match the card's border radius */
+}
+
+.card:hover .card-body {
+  /* background: linear-gradient(180deg, rgba(45, 45, 45, 0) 0%, #2d2d2d 100%); */
+}
+
+.title {
+  font-size: 18px;
+  color: #fffbfb;
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1.2;
+  transform: rotate(-90deg);
+  transform-origin: center center;
+  transition: transform 0.5s ease-in-out;
+  margin-bottom: 50%;
+}
+
+.card:hover .title {
+  transform: rotate(0); /* Rotate to horizontal on hover */
+}
+
+p {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out;
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 10px;
+}
+
+.card:hover p {
+  opacity: 1;
+  max-height: 100%;
+  transition-delay: 0.3s;
+}

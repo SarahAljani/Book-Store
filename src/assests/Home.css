@@ -1,0 +1,23 @@
+.floating-image {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(10px);
+  }
+  50% {
+    transform: translateY(0); /* Adjust the float distance */
+  }
+  100% {
+    transform: translateY(10px);
+  }
+}
+.all {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}

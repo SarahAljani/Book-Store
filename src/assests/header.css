@@ -1,0 +1,26 @@
+header img {
+  /* width: 120px;
+  height: 120px; */
+}
+header {
+  margin-top: 6px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.navbar .nav-link.active {
+  color: #ff5722; /* Custom color for active link */
+  font-weight: bold;
+}
+
+/* Change color for active NavDropdown item */
+.navbar .dropdown-item.active {
+  color: #ff5722; /* Custom color for active dropdown item */
+  font-weight: bold;
+  background-color: aliceblue;
+}
+
+/* Optionally, change background color for active NavItem */
+.navbar .nav-item.active {
+  color: #ff5722; /* Background color for active nav item */
+}
