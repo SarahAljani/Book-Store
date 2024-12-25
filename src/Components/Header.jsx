@@ -5,31 +5,33 @@ import {
   faCartShopping,
   faRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import { useLocation } from "react-router-dom";
-
-import logo from "../assests/logo.png";
-import "../assests/header.css";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Link, NavLink } from "react-router-dom";
 import { useMediaQuery } from "@mantine/hooks";
+import logo from "../assests/logo.png";
+import "../assests/header.css";
+
 const Header = () => {
   const [dropdownActive, setDropdownActive] = useState(false);
   const location = useLocation();
   const isSmallScreen = useMediaQuery("(max-width: 900px)");
-  // Check if any of the dropdown items are ac
   const isDropdownItemActive =
     location.pathname === "russian-books" ||
     location.pathname === "victorian-books" ||
     location.pathname === "kids-books";
-
+  const navigate = useNavigate();
   return (
     <header style={{ alignItems: isSmallScreen ? "start" : "center" }}>
       <img
         src={logo}
         alt="logo"
         style={{ width: isSmallScreen ? "80px" : "100px" }}
+        onClick={() => {
+          navigate("/");
+        }}
       />
 
-      <Navbar expand="lg" className="">
+      <Navbar expand="lg">
         <Container
           style={{
             display: "flex",
@@ -40,16 +42,16 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link as={NavLink} to=""  >
+              <Nav.Link as={NavLink} to="">
                 Home
               </Nav.Link>
               <NavDropdown
-                  title="Library"
+                title="Library"
                 id="basic-nav-dropdown"
-                className={
-                  dropdownActive || isDropdownItemActive ? "active" : ""
-                }
-                onClick={() => setDropdownActive(true)}
+                className={`${
+                  dropdownActive || isDropdownItemActive ? "show" : ""
+                }`}
+                onClick={() => setDropdownActive(!dropdownActive)}
               >
                 <NavDropdown.Item as={NavLink} to={`library`}>
                   All The Library
@@ -71,10 +73,10 @@ const Header = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
               </NavDropdown>
-              <Nav.Link as={NavLink} to="history" activeClassName="active"  >
+              <Nav.Link as={NavLink} to="history" activeClassName="active">
                 History
               </Nav.Link>
-              <Nav.Link as={NavLink} to="contact-us" activeClassName="active" >
+              <Nav.Link as={NavLink} to="contact-us" activeClassName="active">
                 Contact Us
               </Nav.Link>
               <Nav.Link as={NavLink} to="cart" activeClassName="active">
@@ -89,7 +91,6 @@ const Header = () => {
                   style={{ color: "#d64000" }}
                 />
               </Nav.Link>
-              {/* <Nav.Link href="#sign-up">Sign Up</Nav.Link> */}
             </Nav>
           </Navbar.Collapse>
         </Container>

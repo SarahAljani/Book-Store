@@ -1,6 +1,5 @@
-header img {
-  /* width: 120px;
-  height: 120px; */
+header img:hover {
+  cursor: pointer;
 }
 header {
   margin-top: 6px;
@@ -20,7 +19,26 @@ header {
   background-color: aliceblue;
 }
 
-/* Optionally, change background color for active NavItem */
 .navbar .nav-item.active {
-  color: #ff5722; /* Background color for active nav item */
+  color: #ff5722;
+}
+.dropdown-menu {
+  animation: dropdownAnimation 0.3s ease;
+  transform-origin: top right;
+  transform: scaleY(0);
+}
+
+.show .dropdown-menu {
+  animation: dropdownAnimation 0.3s ease forwards;
+}
+.show hr {
+  display: none;
+}
+@keyframes dropdownAnimation {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
 }
