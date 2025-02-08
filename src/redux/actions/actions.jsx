@@ -24,7 +24,6 @@ export const incrementBookQuantity = (index) => ({
   type: INCREMENT_BOOK_QUANTITY,
   payload: index,
 });
-
 export const decrementBookQuantity = (index) => ({
   type: DECREMENT_BOOK_QUANTITY,
   payload: index,

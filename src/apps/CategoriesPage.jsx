@@ -8,8 +8,9 @@ import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutli
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { categories } from "../assests/categories";
 import Search from "../Components/Search";
-import { addBook } from "../redux/actions/actions";
+import { addBook, deleteBook } from "../redux/actions/actions";
 import { useDispatch } from "react-redux";
+import { useSnackbar } from "notistack";
 
 const CategoriesPage = () => {
   const { categoryTitle } = useParams();
@@ -17,17 +18,22 @@ const CategoriesPage = () => {
   const category = categories.find((c) => c.title === categoryTitle);
   const [filteredBooks, setFilteredBooks] = useState([]);
   const dispatch = useDispatch();
-
+  const { enqueueSnackbar } = useSnackbar();
   const handleAdd = (book) => {
     if (!book.added) {
-      // Only dispatch if the book isn't already added
-      dispatch(addBook(book)); // Dispatch the addBook action to the store
-      book.added = true; // Update the local state
+      book.added = true;
+      dispatch(addBook(book));
+      const title = book.title;
+      enqueueSnackbar(`${title} Book added to cart!`, {
+        variant: "success",
+      });
       setFilteredBooks([...filteredBooks]); // Trigger a re-render
     } else {
-      dispatch(addBook(book)); // Dispatch the addBook action to the store
-      book.added = false; // Update the local state
-      setFilteredBooks([...filteredBooks]); // Trigger a re-render
+      book.added = false;
+      dispatch(deleteBook(book.id));
+      const title = book.title;
+      enqueueSnackbar(`${title} Book removed from cart!`, { variant: "error" });
+      setFilteredBooks([...filteredBooks]);
     }
   };
   // const handleSeeMore = (index) => {
@@ -98,7 +104,7 @@ const CategoriesPage = () => {
                       onClick={() => handleAdd(book)}
                       sx={{ marginTop: "10px" }} // Ensure spacing between buttons
                     >
-                      add to cart
+                      {book.added ? "remove from cart" : "add to cart"}
                     </Button>
                     <Button onClick={() => handleSeeMore(book.id)}>
                       See More

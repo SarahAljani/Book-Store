@@ -1,7 +1,6 @@
 import React from "react";
 import Lottie from "react-lottie";
-import DoneLottie from "../Components/Lotties/DoneLottie.json"; // Adjust the path as needed
-import { useMediaQuery } from "@mantine/hooks";
+import DoneLottie from "../Components/Lotties/DoneLottie.json"; 
 
 const HolaPage = () => {
   // Lottie animation settings

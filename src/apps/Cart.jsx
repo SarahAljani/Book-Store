@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import CartTable from "../Components/cards/CartTable";
 import Lottie from "react-lottie";
 import EmptyLottie from "../Components/Lotties/EmptyLottie.json";
+import { Button } from "@mui/joy";
 
 const Cart = () => {
   // Fetch cart items from Redux
@@ -31,7 +32,23 @@ const Cart = () => {
       }}
     >
       {books && books.length > 0 ? (
-        <CartTable />
+        <div
+          style={{
+            display: "flex",
+            width: "80%",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <CartTable />
+          <hr
+            style={{ height: "1px", backgroundColor: "black", width: "100%" }}
+          />
+          <Button color="primary" style={{ alignSelf: "end" }}>
+            Approve Order
+          </Button>
+        </div>
       ) : (
         <div style={{ textAlign: "center" }}>
           <Lottie options={defaultOptions} height={300} width={300} />

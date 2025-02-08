@@ -1,23 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Button from "@mui/joy/Button";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import "../assests/BookPage.css";
 import { useDispatch } from "react-redux";
-import { addBook } from "../redux/actions/actions";
+import { addBook, deleteBook } from "../redux/actions/actions";
 import { books } from "../assests/data";
 import { useMediaQuery } from "@mantine/hooks";
-// import { useMediaQuery } from "@mantine/hooks";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import { SnackbarProvider, useSnackbar } from "notistack";
 
 const BookPage = () => {
   const isSmallScreen = useMediaQuery("(max-width: 700px)");
   const { id } = useParams(); // Get the book index from the URL params
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   // Safely retrieve the book using the index
   const book = books.find((b) => b.id == id);
-
+  const [bookAdded, setBookAdded] = useState(null);
+  useEffect(() => {
+    setBookAdded(book.added);
+  }, [book]);
   if (!book) {
     // If no book is found, navigate back to a safe page
     navigate("/");
@@ -25,7 +30,15 @@ const BookPage = () => {
   }
 
   const handleAddToCart = () => {
-    dispatch(addBook(book));
+    if (!bookAdded) {
+      setBookAdded(true); // Update the local state
+      dispatch(addBook(book));
+      enqueueSnackbar("Book added to cart!", { variant: "success" });
+    } else {
+      setBookAdded(false); // Update the local state
+      dispatch(deleteBook(book.id));
+      enqueueSnackbar("Book removed from cart!", { variant: "error" });
+    }
   };
 
   return (
@@ -33,8 +46,9 @@ const BookPage = () => {
       className="book-page-container"
       style={{
         width: "100%",
+        marginTop: "27px",
         display: "flex",
-        flexWrap: isSmallScreen ? "wrap" : "nowarp",
+        flexWrap: isSmallScreen ? "wrap" : "nowrap",
         justifyContent: "center",
         alignItems: "start",
       }}
@@ -68,11 +82,17 @@ const BookPage = () => {
 
         <div className="book-page-actions">
           <Button
-            startDecorator={<ShoppingCartOutlinedIcon />}
-            onClick={handleAddToCart}
+            startDecorator={
+              bookAdded ? (
+                <CheckCircleOutlineOutlinedIcon />
+              ) : (
+                <ShoppingCartOutlinedIcon />
+              )
+            }
+            onClick={() => handleAddToCart()} // Pass a reference to the function
             sx={{ marginTop: "10px" }}
           >
-            Add to cart
+            {bookAdded ? "Remove from cart" : "Add to cart"}
           </Button>
         </div>
       </div>

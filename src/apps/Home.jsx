@@ -11,6 +11,7 @@ import { Button } from "react-bootstrap";
 import CatigoriesCard from "../Components/cards/CatigoriesCard";
 import BookCard from "../Components/cards/BookCard";
 import { useMediaQuery } from "@mantine/hooks";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
   const defaultOptions = {
     loop: true, // Enable looping
@@ -21,7 +22,7 @@ const Home = () => {
     },
   };
   const isSmallScreen = useMediaQuery("(max-width: 900px)");
-
+  const navigate = useNavigate();
   return (
     <div className="all" style={{ marginTop: isSmallScreen ? "100px" : "0px" }}>
       <Grid2
@@ -71,7 +72,16 @@ const Home = () => {
                 recusandae? Cupiditate porro ex deserunt delectus sit? Quod qui
                 rerum hic?
               </h6>
-              <Button className="orang"> take a look!</Button>
+              <Button
+                className="orang"
+                on
+                onClick={() => {
+                  navigate("library");
+                }}
+              >
+                {" "}
+                take a look!
+              </Button>
             </div>
           </Box>
         </Grid2>

@@ -19,6 +19,7 @@ export const books = [
   {
     title: "Betty",
     id: 1,
+    quantity: 20,
     image: img1,
     pages: 300,
     author: "Tiffany Mcdaniel",
@@ -30,6 +31,7 @@ export const books = [
     title: "Arabia Felix",
     image: img2,
     id: 2,
+    quantity: 30,
     pages: 400,
     author: "Thorkild Hansen",
     description:
@@ -50,6 +52,7 @@ export const books = [
     image: img4,
     pages: 400,
     id: 4,
+    quantity: 7,
     category: "Russian Novels",
     author: "Zelda Riese",
     description:
@@ -59,6 +62,7 @@ export const books = [
     title: "The Great Gatsby",
     image: img5,
     pages: 150,
+    quantity: 12,
     id: 5,
     author: "F.Scott Fitzgerald",
     description:
@@ -68,6 +72,7 @@ export const books = [
     title: "The MindFulness Journal",
     image: img6,
     pages: 200,
+    quantity: 10,
     id: 6,
     author: "Corinne Sweet",
     category: "Series Novels",
@@ -78,6 +83,7 @@ export const books = [
     title: "The MindFulness Journal",
     image: img6,
     pages: 200,
+    quantity: 11,
     id: 7,
     author: "Corinne Sweet",
     category: "Series Novels",
@@ -89,6 +95,7 @@ export const books = [
     image: img6,
     pages: 200,
     id: 8,
+    quantity: 9,
     author: "Corinne Sweet",
     category: "Victorian Novels",
     description:
@@ -97,6 +104,7 @@ export const books = [
   {
     title: "The MindFulness Journal",
     image: img6,
+    quantity: 8,
     pages: 200,
     id: 9,
     author: "Corinne Sweet",
@@ -109,6 +117,7 @@ export const books = [
     image: img7,
     pages: 361,
     id: 10,
+    quantity: 15,
     category: "Russian Novels",
     author: "Susanna Hislop",
     description:
@@ -118,6 +127,7 @@ export const books = [
     title: "The Periodic Table",
     image: img8,
     pages: 266,
+    quantity: 7,
     id: 11,
     category: "Kids Books",
     author: "Primo Levi",
@@ -129,6 +139,7 @@ export const books = [
     image: img9,
     pages: 184,
     id: 12,
+    quantity: 7,
     author: "David Szalay",
     category: "Russian Novels",
     description:
@@ -139,6 +150,7 @@ export const books = [
     image: img1,
     pages: 256,
     id: 13,
+    quantity: 5,
     author: "Gretchen Stewart",
     description:
       "Simplicity is a philosophy. A way of life. A new way to think. A paradigm shift inducing global movement. In Simplicity, I break down the stresses of the modern age and help you curate your best life. We treat your existence as art and learn how to live with intention as well as increase your focus, despite all the demands and distractions of this era.",
@@ -148,6 +160,7 @@ export const books = [
     image: img2,
     pages: 388,
     id: 14,
+    quantity: 23,
     author: "Amisha Ghadiali",
     category: "Series Novels",
     description:
@@ -157,6 +170,7 @@ export const books = [
     title: "When You Ask Me When I’m Going",
     image: img3,
     pages: 256,
+    quantity: 23,
     id: 15,
     category: "Russian Novels",
     author: "Jasmin ",

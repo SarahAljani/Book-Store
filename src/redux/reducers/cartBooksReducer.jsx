@@ -20,15 +20,22 @@ function cartBooksReducer(state = initialState, action) {
     case DELETE_BOOK:
       return {
         ...state,
-        books: state.books.filter((e, i) => i !== action.payload),
+        books: state.books.filter((book) => book.id !== action.payload),
       };
 
     case INCREMENT_BOOK_QUANTITY:
       return {
         ...state,
-        books: state.books.map((book,i) =>
-          i === action.payload
-            ? { ...book, number: book.number + 1 }
+        books: state.books.map((book, i) =>
+          i === action.payload ? { ...book, number: book.number + 1 } : book
+        ),
+      };
+    case "UPDATE_BOOK_QUANTITY":
+      return {
+        ...state,
+        books: state.books.map((book, index) =>
+          index === action.payload.index
+            ? { ...book, number: action.payload.number }
             : book
         ),
       };
@@ -36,7 +43,7 @@ function cartBooksReducer(state = initialState, action) {
     case DECREMENT_BOOK_QUANTITY:
       return {
         ...state,
-        books: state.books.map((book,i) =>
+        books: state.books.map((book, i) =>
           i === action.payload && book.number > 1
             ? { ...book, number: book.number - 1 }
             : book
