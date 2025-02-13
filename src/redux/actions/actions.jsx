@@ -20,13 +20,13 @@ export const deleteBook = (bookId) => ({
   payload: bookId,
 });
 
-export const incrementBookQuantity = (index) => ({
+export const incrementBookQuantity = (id) => ({
   type: INCREMENT_BOOK_QUANTITY,
-  payload: index,
+  payload: id,
 });
-export const decrementBookQuantity = (index) => ({
+export const decrementBookQuantity = (id) => ({
   type: DECREMENT_BOOK_QUANTITY,
-  payload: index,
+  payload: id,
 });
 export const addUser = (user) => ({
   type: ADD_USER,
