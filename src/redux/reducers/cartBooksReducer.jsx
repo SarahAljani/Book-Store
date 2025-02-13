@@ -42,11 +42,6 @@ function cartBooksReducer(state = initialState, action) {
             : book
         ),
       };
-    // case UPDATE_USER_RETURN_DATE:
-    //   return {
-    //     ...state,
-    //     book: { ...state.book, returnDate: action.payload }, // Update returnDate in user state
-    //   };
 
     default:
       return state;
