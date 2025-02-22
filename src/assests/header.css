@@ -5,13 +5,37 @@ header {
   margin-top: 6px;
   width: 100%;
   display: flex;
+  position: relative;
   justify-content: space-between;
+  overflow: visible;
+  z-index: 2;
+}
+.navbar {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.navbar-expand-lg {
+  width: 170px !important;
+}
+.navbar-expand-lg {
+  width: 70% !important;
 }
 .navbar .nav-link.active {
   color: #ff5722; /* Custom color for active link */
   font-weight: bold;
 }
-
+.burger {
+  width: 150px;
+  background-color: rgba(209, 209, 209, 0.5);
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0s;
+}
+.
 /* Change color for active NavDropdown item */
 .navbar .dropdown-item.active {
   color: #ff5722; /* Custom color for active dropdown item */

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import Button from "@mui/joy/Button";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import "../assests/BookPage.css";
@@ -9,6 +9,7 @@ import { books } from "../assests/data";
 import { useMediaQuery } from "@mantine/hooks";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import { SnackbarProvider, useSnackbar } from "notistack";
+import { toggleAddedInv } from "../redux/reducers/booksSlice";
 
 const BookPage = () => {
   const isSmallScreen = useMediaQuery("(max-width: 700px)");
@@ -16,29 +17,30 @@ const BookPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-
+  const location = useLocation();
+  const book = location.state?.book;
   // Safely retrieve the book using the index
-  const book = books.find((b) => b.id == id);
-  const [bookAdded, setBookAdded] = useState(null);
+  const [bookAdded, setBookAdded] = useState(book.added);
   useEffect(() => {
     setBookAdded(book.added);
-  }, [book]);
+  }, [book.added]);
   if (!book) {
     // If no book is found, navigate back to a safe page
     navigate("/");
     return null;
   }
 
-  const handleAddToCart = () => {
+  const handleAdd = () => {
     if (!bookAdded) {
-      setBookAdded(true); // Update the local state
       dispatch(addBook(book));
-      enqueueSnackbar("Book added to cart!", { variant: "success" });
+      enqueueSnackbar(`${book.title} added to cart!`, { variant: "success" });
     } else {
-      setBookAdded(false); // Update the local state
       dispatch(deleteBook(book.id));
-      enqueueSnackbar("Book removed from cart!", { variant: "error" });
+      enqueueSnackbar(`${book.title} removed from cart!`, { variant: "error" });
     }
+
+    dispatch(toggleAddedInv(book.id)); // Update Redux state
+    setBookAdded((prev) => !prev); // Toggle local state
   };
 
   return (
@@ -89,7 +91,7 @@ const BookPage = () => {
                 <ShoppingCartOutlinedIcon />
               )
             }
-            onClick={() => handleAddToCart()} // Pass a reference to the function
+            onClick={() => handleAdd()} // Pass a reference to the function
             sx={{ marginTop: "10px" }}
           >
             {bookAdded ? "Remove from cart" : "Add to cart"}

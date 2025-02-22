@@ -1,44 +1,61 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { books } from "../assests/data";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "@mui/joy/Button";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Search from "../Components/Search";
-import { useDispatch } from "react-redux";
-import { addBook } from "../redux/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { addBook, deleteBook } from "../redux/actions/actions";
 import "../index.css";
 import "../assests/BookCard.css"; // Ensure this path is correct
+import { useSnackbar } from "notistack";
+import { toggleAddedInv } from "../redux/reducers/booksSlice";
 
 const Library = () => {
   const [filteredBooks, setFilteredBooks] = useState([]);
   const dispatch = useDispatch();
-
+  const books = useSelector((state) => state.books || []);
+  useEffect(() => {
+    if (!books || books.length === 0) return;
+    setFilteredBooks(books);
+  }, [books]);
+  const { enqueueSnackbar } = useSnackbar();
   const handleAdd = (book) => {
     if (!book.added) {
-      // Only dispatch if the book isn't already added
-      dispatch(addBook(book)); // Dispatch the addBook action to the store
-      book.added = true; // Update the local state
+      dispatch(addBook(book));
+      console.log("book.added to cart");
+      const title = book.title;
+      enqueueSnackbar(`${title} Book added to cart!`, {
+        variant: "success",
+      });
       setFilteredBooks([...filteredBooks]); // Trigger a re-render
     } else {
-      dispatch(addBook(book)); // Dispatch the addBook action to the store
-      book.added = false; // Update the local state
-      setFilteredBooks([...filteredBooks]); // Trigger a re-render
+      dispatch(deleteBook(book.id));
+      console.log("book removed from cart");
+      const title = book.title;
+      enqueueSnackbar(`${title} Book removed from cart!`, { variant: "error" });
+      setFilteredBooks([...filteredBooks]);
     }
+    dispatch(toggleAddedInv(book.id));
+    console.log("book.added reversed");
   };
-
-  const handleSeeMore = (id) => {
+  const navigate = useNavigate();
+  const handleSeeMore = (book) => {
     // Navigate to the book details page
-    window.location.href = `/book/${id}`;
+    navigate(`/book/${book.id}`, { state: { book } });
   };
 
   return (
-    <>
+    <div className="main__container">
       <div
-        className="search"
+        className="searchhh"
         style={{ display: "flex", justifyContent: "center" }}
       >
-        <Search books={books} setFilteredBooks={setFilteredBooks} />
+        <div className={"route__domain"}>{`Library / all Books`}</div>
+        <Search
+          setFilteredBooks={setFilteredBooks}
+          filteredBooks={filteredBooks}
+        />
       </div>
       <div className="container">
         <div className="card__container">
@@ -82,9 +99,11 @@ const Library = () => {
                       }
                       onClick={() => handleAdd(book)}
                     >
-                      Add to cart
+                      {book.added ? "Remove from cart" : "Add to cart"}
                     </Button>
-                    <Button onClick={() => handleSeeMore(book.id)}>See More</Button>
+                    <Button onClick={() => handleSeeMore(book)}>
+                      See More
+                    </Button>
                   </div>
                 </div>
               </article>
@@ -94,7 +113,7 @@ const Library = () => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

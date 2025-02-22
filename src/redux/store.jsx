@@ -3,12 +3,12 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // Defaults to localStorage for web
 import cartBooksReducer from "./reducers/cartBooksReducer";
 import usersReducer from "./reducers/usersReducer";
-
+import booksReducer from "./reducers/booksSlice"; // Import booksSlice
 // Persist Configuration
 const persistConfig = {
   key: "root", // Key for the storage
   storage, // Use localStorage
-  whitelist: ["cart"], // Reducers you want to persist
+  whitelist: ["cart", "books"], // Persist books and cart
   blacklist: ["users"],
 };
 
@@ -16,7 +16,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   cart: cartBooksReducer,
   users: usersReducer,
-  // Add other reducers here
+  books: booksReducer, // Add books reducer
 });
 
 // Wrap rootReducer with persistReducer

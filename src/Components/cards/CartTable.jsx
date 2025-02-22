@@ -20,6 +20,7 @@ import {
 import { Input } from "@mui/joy";
 import "../../assests/BookPage.css";
 import { useMediaQuery } from "@mui/material";
+import { toggleAddedInv } from "../../redux/reducers/booksSlice";
 const CartTable = () => {
   const books = useSelector((state) => state.cart.books);
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ const CartTable = () => {
   };
   const handleDelete = (id) => {
     dispatch(deleteBook(id)); // Send book ID instead of index
+    dispatch(toggleAddedInv(id));
   };
 
   const handleInputChange = (book, index, value) => {
@@ -249,7 +251,9 @@ const CartTable = () => {
                         minHeight: "20px",
                       }}
                     >
-                      <RemoveIcon style={{ fontSize: "15px" ,fontWeight:"800"}} />
+                      <RemoveIcon
+                        style={{ fontSize: "15px", fontWeight: "800" }}
+                      />
                     </Button>
                   </ButtonGroup>
                   <DeleteForeverIcon

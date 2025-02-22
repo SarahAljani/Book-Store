@@ -14,7 +14,7 @@ import "../assests/header.css";
 const Header = () => {
   const [dropdownActive, setDropdownActive] = useState(false);
   const location = useLocation();
-  const isSmallScreen = useMediaQuery("(max-width: 900px)");
+  const isSmallScreen = useMediaQuery("(max-width: 991px)");
   const isDropdownItemActive =
     location.pathname === "russian-books" ||
     location.pathname === "victorian-books" ||
@@ -40,7 +40,10 @@ const Header = () => {
           }}
         >
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
+          <Navbar.Collapse
+            id="basic-navbar-nav"
+            className={isSmallScreen ? "burger" : "flat"}
+          >
             <Nav className="me-auto">
               <Nav.Link as={NavLink} to="">
                 Home
@@ -77,7 +80,7 @@ const Header = () => {
                 History
               </Nav.Link>
               <Nav.Link as={NavLink} to="contact-us" activeClassName="active">
-                Contact Us
+                Contact-Us
               </Nav.Link>
               <Nav.Link as={NavLink} to="cart" activeClassName="active">
                 <FontAwesomeIcon

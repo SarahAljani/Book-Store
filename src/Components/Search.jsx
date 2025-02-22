@@ -3,30 +3,48 @@ import "../assests/Search.css";
 import { Container } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
-
-const Search = ({ books, setFilteredBooks }) => {
+import { useSelector } from "react-redux";
+import { categories } from "../assests/categories";
+import { useMediaQuery } from "@mantine/hooks";
+const Search = ({ setFilteredBooks, categoryTitle, filteredBooks }) => {
   const [searchTerm, setSearchTerm] = useState("");
-
+  const category = categories.find((c) => c.title === categoryTitle);
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
-
+  const books = useSelector((state) => state.books || []);
+  const [filtered, setFiltered] = useState(books);
   useEffect(() => {
-    const filteredBooks = books.filter((book) => {
-      const title = book.title.toLowerCase();
-      const author = book.author.toLowerCase();
-      const description = book.description.toLowerCase();
-      const searchTermLower = searchTerm.toLowerCase();
+    if (categoryTitle) {
+      if (!books || books.length === 0) return;
+      setFiltered(books.filter((book) => book.category === categoryTitle));
+    }
+  }, [books, categoryTitle]);
+  useEffect(() => {
+    setFilteredBooks(
+      filtered.filter((book) => {
+        const title = book.title.toLowerCase();
+        const author = book.author.toLowerCase();
+        const description = book.description.toLowerCase();
+        const searchTermLower = searchTerm.toLowerCase();
 
-      return (
-        title.includes(searchTermLower) ||
-        author.includes(searchTermLower) ||
-        description.includes(searchTermLower)
-      );
-    });
-    setFilteredBooks(filteredBooks);
-  }, [searchTerm, books]);
-
+        return (
+          title.includes(searchTermLower) ||
+          author.includes(searchTermLower) ||
+          description.includes(searchTermLower)
+        );
+      })
+    );
+  }, [
+    categoryTitle,
+    category,
+    books,
+    setFilteredBooks,
+    searchTerm,
+    filtered,
+    setFiltered,
+  ]);
+  const isSmallScreen = useMediaQuery("(max-width: 600px)");
   return (
     <StyledTextField
       variant="outlined"
@@ -37,6 +55,7 @@ const Search = ({ books, setFilteredBooks }) => {
       InputProps={{
         sx: {
           color: "#bb2701", // Text color
+          width: isSmallScreen ? "100% !important" : "40% !important",
         },
       }}
       sx={{
